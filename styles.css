@@ -1,0 +1,49 @@
+body {
+    background-color: #005678;
+    color: #d1f7ff;
+}
+
+.navbar-custom {
+    background-color: #01012b;
+}
+
+.navbar-custom .navbar-brand {
+    color: #ff2a6d;
+}
+
+.navbar-custom li a {
+    color: #05d9e8;
+}
+
+.navbar-custom li a:hover,
+.navbar-custom li a:focus,
+.navbar-custom li a:active {
+    color: #d1f7ff;
+}
+
+.navbar-custom .navbar-toggler {
+    border-color: #05d9e8;
+    border-radius: 0;
+}
+
+.navbar-custom .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(5,217,232, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.btn {
+    color: #05d9e8;
+    border-color: #05d9e8;
+    background-color: #050a0e;
+    border-radius: 0;
+}
+
+.btn:hover {
+    color: #050a0e;
+    border-color: #050a0e;
+    background-color: #fcee09;
+    border-radius: 10%;
+}
+
+.red {
+    color: red;
+}
