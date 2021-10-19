@@ -33,17 +33,53 @@ body {
 .btn {
     color: #05d9e8;
     border-color: #05d9e8;
-    background-color: #050a0e;
+    background-color: #01012b;
     border-radius: 0;
 }
 
-.btn:hover {
-    color: #050a0e;
-    border-color: #050a0e;
+.btn:hover,
+.btn:active {
+    color: #01012b;
+    border-color: #01012b;
     background-color: #fcee09;
-    border-radius: 10%;
 }
 
-.red {
-    color: red;
+.btn:active {
+    border-radius: 20%;
+}
+
+.form-control,
+.form-control:focus {
+    color: #d1f7ff;
+    border-color: #01012b;
+    background-color: #005678;
+}
+
+.img-thumbnail.ads {
+    background-color: #01012b;
+    border-color: #01012b;
+    max-height: 300px;
+}
+
+.img-thumbnail.screenshot {
+    background-color: #01012b;
+    border-color: #01012b;
+    padding: .1rem;
+}
+
+
+.a-custom:link,
+.a-custom:visited {
+    color: #05d9e8;
+    text-decoration: none;
+}
+
+.a-custom:hover,
+.a-custom:active {
+    color: #05d9e8;
+    text-decoration: underline;
+}
+
+.form-text {
+    color: #fcee09;
 }
