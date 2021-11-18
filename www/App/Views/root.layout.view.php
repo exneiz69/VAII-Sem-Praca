@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sem Praca</title>
+    <title>Game Community</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- CSS only -->
@@ -15,12 +15,12 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="public/styles.css" type="text/css">
 </head>
 <body>
 <nav class="navbar navbar-custom navbar-expand-lg mb-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html"><i class="bi bi-controller me-1"></i>Game Community</a>
+        <a class="navbar-brand" href="?c=home"><i class="bi bi-controller me-1"></i>Game Community</a>
         <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,19 +30,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" aria-current="page" href="?c=home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="news.html">News</a>
+                    <a class="nav-link" href="?c=news">News</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="screenshots.html">Screenshots</a>
+                    <a class="nav-link" href="?c=screenshots">Screenshots</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="./videos.html">Videos</a>
+                    <a class="nav-link" href="?c=videos">Videos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="sign-in.html">Sign-in</a>
+                    <a class="nav-link" href="?c=home&a=registration">Sign-in</a>
                 </li>
             </ul>
             <form class="d-flex">
@@ -52,36 +52,6 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid">
-    <div class="row pb-5">
-        <div class="col-12">
-            <h1 class="text-center">Navigation</h1>
-        </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-12 col-md-9 col-lg-8">
-            <div class="row justify-content-center mb-4">
-                <div class="col-auto">
-                    <div class="ratio ratio-16x9 mb-1">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="YouTube video"
-                                allowfullscreen></iframe>
-                    </div>
-                    <button type="button" class="btn me-3"><i class="bi bi-heart"></i></button>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas accumsan.</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-3 order-md-first col-lg-2">
-            <h1 class="text-center">Sidebar</h1>
-        </div>
-        <div class="col-12 col-md-3 col-lg-2">
-            <h1 class="text-center">Ads</h1>
-            <img src="img/tetris%20ad.jpeg" class="img-thumbnail ads mx-auto d-block" alt="...">
-        </div>
-        <div class="col-12 col-md-9 col-lg-12">
-            <h1 class="text-center">Footer</h1>
-        </div>
-    </div>
-</div>
-</body>
-</html>
+<?= $contentHTML ?>
+
+

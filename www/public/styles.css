@@ -45,7 +45,7 @@ body {
 }
 
 .btn:active {
-    border-radius: 20%;
+    border-radius: 15%;
 }
 
 .form-control,
