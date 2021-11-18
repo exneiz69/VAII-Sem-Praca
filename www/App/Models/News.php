@@ -27,6 +27,6 @@ class News extends Model
      */
     public function getComments()
     {
-        return NewsComment::getAll("NewsID = ?", [intval($this->ID)]);
+        return NewsComment::getAll("NewsID = (?)", [intval($this->ID)]);
     }
 }

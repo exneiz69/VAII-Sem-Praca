@@ -11,6 +11,7 @@
     </div>
     <div class="row pt-4">
         <div class="col-12 col-md-9 col-lg-8">
+            <?php if (\App\Authorization::isLogged()) { ?>
             <form method="post" action="?c=videos&a=uploadVideo" class="row border mb-4">
                 <div class="col-auto">
                     <label for="basic-url" class="form-label">YouTube video ID</label>
@@ -23,6 +24,7 @@
                     <button type="submit" class="btn btn-primary mb-2">Continue</button>
                 </div>
             </form>
+            <?php } ?>
 
             <?php foreach ($data as $video) { ?>
             <div class="row justify-content-center mb-4">
@@ -31,7 +33,7 @@
                         <iframe src="<?= $video->Source ?>" title="YouTube video"
                                 allowfullscreen></iframe>
                     </div>
-                    <button type="button" class="btn me-3"><i class="bi bi-heart"></i></button>
+                    <a href="?c=videos&a=likeVideo&videoID=<?= $video->ID ?>" type="button" class="btn me-3"><i class="bi bi-heart pe-2"></i><?= $video->getLikesAmount() ?></a>
                     <span><?= $video->Description ?></span>
                 </div>
             </div>

@@ -83,3 +83,16 @@ body {
 .form-text {
     color: #fcee09;
 }
+
+.text-justify {
+    text-indent: 2rem;
+    text-align: justify;
+}
+
+hr {
+    border-top:1px dotted #000;
+}
+
+textarea {
+    resize: none;
+}

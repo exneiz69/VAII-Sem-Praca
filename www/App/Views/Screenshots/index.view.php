@@ -11,7 +11,8 @@
     </div>
     <div class="row pt-4">
         <div class="col-12 col-md-9 col-lg-8">
-            <form method="post" enctype="multipart/form-data" action="?c=screenshots&a=uploadPost" class="row border mb-4">
+            <?php if (\App\Authorization::isLogged()) { ?>
+            <form method="post" enctype="multipart/form-data" action="?c=screenshots&a=uploadScreenshot" class="row border mb-4">
                 <div class="col-auto">
                     <label for="inputScreenshot" class="form-label">Select your screenshot file</label>
                     <input class="form-control mb-3" type="file" name="screenshot" id="inputScreenshot">
@@ -20,13 +21,14 @@
                     <button type="submit" class="btn btn-primary mb-2">Continue</button>
                 </div>
             </form>
+            <?php } ?>
 
             <?php foreach ($data as $screenshot) { ?>
             <div class="row justify-content-center mb-4">
                 <div class="col-11">
                     <img src="<?= $screenshot->Source ?>" class="img-thumbnail screenshot mb-1" alt="...">
                     <br>
-                    <button type="button" class="btn me-3"><i class="bi bi-heart"></i></button>
+                    <a href="?c=screenshots&a=likeScreenshot&screenshotID=<?= $screenshot->ID ?>" type="button" class="btn me-3"><i class="bi bi-heart pe-2"></i><?= $screenshot->getLikesAmount() ?></a>
                     <span><?= $screenshot->Description ?></span>
                 </div>
             </div>

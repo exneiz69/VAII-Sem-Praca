@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10">
-            <h3 class="text-start">If you already have an account, please <a class="a-custom" href="#">sign in here.</a>
+            <h3 class="text-start">If you already have an account, please <a class="a-custom" href="?c=home&a=login">sign in here.</a>
             </h3>
         </div>
     </div>
@@ -31,7 +31,7 @@
                     service</a></label>
         </div>
         <div class="col-10 mb-3">
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn">Continue</button>
         </div>
     </form>
 

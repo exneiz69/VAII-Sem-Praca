@@ -41,9 +41,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="?c=videos">Videos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?c=home&a=registration">Sign-in</a>
-                </li>
+                <?php if (\App\Authorization::isLogged()) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?c=home&a=logout">Logout</a>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?c=home&a=registration">Sign-in</a>
+                    </li>
+                <?php } ?>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="search" aria-label="Search">

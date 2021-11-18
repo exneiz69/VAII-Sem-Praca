@@ -21,4 +21,21 @@ class User extends Model
     {
         return 'Users';
     }
+
+    public static function getUser($username, $password)
+    {
+        $user = parent::getAll("Username = (?) AND Password = (?) LIMIT 1", [$username, $password]);
+
+        return reset($user);
+        /*$stmt = Connection::connect()
+            ->prepare("SELECT * FROM Users WHERE Username = (?) AND Password = (?)");
+        $stmt->execute([intval($username), intval($password)]);
+        if ($stmt->rowCount() != 0) {
+            return true;
+        }
+        else {
+            return false;
+        }*/
+    }
+
 }
