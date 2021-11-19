@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Authorization;
 use App\Config\Configuration;
 use App\Core\AControllerBase;
 use App\Models\Post;
@@ -21,7 +22,7 @@ class ScreenshotsController extends AControllerBase
 
     public function uploadScreenshot()
     {
-        if (\App\Authorization::isLogged()) {
+        if (Authorization::isLogged()) {
             if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] == UPLOAD_ERR_OK) {
                 $tmp_path = $_FILES['screenshot']['tmp_name'];
                 $name = $_FILES['screenshot']['name'];
@@ -29,7 +30,7 @@ class ScreenshotsController extends AControllerBase
                 move_uploaded_file($tmp_path, $new_path);
 
                 $newScreenshot = new Post();
-                $newScreenshot->UserID = 1;
+                $newScreenshot->UserID = Authorization::getID();
                 $newScreenshot->Source = $new_path;
                 $newScreenshot->Description = $_POST['description'];
                 $newScreenshot->save();
@@ -40,12 +41,12 @@ class ScreenshotsController extends AControllerBase
 
     public function likeScreenshot()
     {
-        if (\App\Authorization::isLogged()) {
+        if (Authorization::isLogged()) {
             $screenshotID = $this->request()->getValue('screenshotID');
 
             if ($screenshotID) {
                 $screenshot = Post::getOne($screenshotID);
-                $screenshot->like(1);
+                $screenshot->like(Authorization::getID());
             }
         }
         header('Location: ?c=screenshots');

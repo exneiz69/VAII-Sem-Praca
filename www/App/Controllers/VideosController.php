@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Authorization;
 use App\Core\AControllerBase;
 use App\Models\Post;
 
@@ -20,12 +21,12 @@ class VideosController extends AControllerBase
 
     public function uploadVideo()
     {
-        if (\App\Authorization::isLogged()) {
+        if (Authorization::isLogged()) {
             $videoID = $this->request()->getValue('videoID');
 
             if ($videoID) {
                 $newVideo = new Post();
-                $newVideo->UserID = 1;
+                $newVideo->UserID = Authorization::getID();
                 $newVideo->Source = 'https://www.youtube.com/embed/' . $videoID . '?rel=0';
                 $newVideo->Description = $this->request()->getValue('description');
                 $newVideo->save();
@@ -36,12 +37,12 @@ class VideosController extends AControllerBase
 
     public function likeVideo()
     {
-        if (\App\Authorization::isLogged()) {
+        if (Authorization::isLogged()) {
             $videoID = $this->request()->getValue('videoID');
 
             if ($videoID) {
                 $video = Post::getOne($videoID);
-                $video->like(1);
+                $video->like(Authorization::getID());
             }
         }
         header('Location: ?c=videos');

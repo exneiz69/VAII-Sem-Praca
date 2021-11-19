@@ -19,7 +19,7 @@ class HomeController extends AControllerBase
 
     public function login()
     {
-        if (!\App\Authorization::isLogged()) {
+        if (!Authorization::isLogged()) {
             return $this->html([]);
         }
         else {
@@ -29,7 +29,7 @@ class HomeController extends AControllerBase
 
     public function logout()
     {
-        if (\App\Authorization::isLogged()) {
+        if (Authorization::isLogged()) {
             Authorization::logout();
         }
         $this->redirectToHome();
@@ -37,7 +37,7 @@ class HomeController extends AControllerBase
 
     public function registration()
     {
-        if (!\App\Authorization::isLogged()) {
+        if (!Authorization::isLogged()) {
             return $this->html([]);
         }
         else {
@@ -47,14 +47,14 @@ class HomeController extends AControllerBase
 
     public function authentication()
     {
-        if (!\App\Authorization::isLogged()) {
+        if (!Authorization::isLogged()) {
             $username = $this->request()->getValue('username');
             $password = $this->request()->getValue('password');
 
             $user = User::getUser($username, $password);
 
             if ($user) {
-                Authorization::login($user->ID, $user->Username);
+                Authorization::login($user->ID);
             }
         }
         $this->redirectToHome();
@@ -62,7 +62,7 @@ class HomeController extends AControllerBase
 
     public function createNewAccount()
     {
-        if (!\App\Authorization::isLogged()) {
+        if (!Authorization::isLogged()) {
             $email = $this->request()->getValue('email');
             $password = $this->request()->getValue('password');
             $username = $this->request()->getValue('username');

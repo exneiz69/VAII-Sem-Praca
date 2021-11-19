@@ -42,7 +42,8 @@
                             </div>
                             <?php } ?>
                         </div>
-                        <form class="row justify-content-end mb-4" method="post" action="?c=news&a=addComment">
+                        <?php if (\App\Authorization::isLogged()) { ?>
+                        <form method="post" action="?c=news&a=addComment" class="row justify-content-end mb-4">
                             <div class="col-auto">
                                 <textarea class="form-control mb-3" name="comment" rows="3" cols="60"></textarea>
                                 <input type="hidden" name="newsID" value="<?= $news->ID ?>">
@@ -51,6 +52,7 @@
                                 <button type="submit" class="btn mb-2">Add comment</button>
                             </div>
                         </form>
+                        <?php } ?>
                     </div>
                 </div>
             <?php } ?>
