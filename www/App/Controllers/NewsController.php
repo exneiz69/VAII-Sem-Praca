@@ -27,11 +27,11 @@ class NewsController extends AControllerBase
             $content = $this->request()->getValue('content');
 
             if ($title && $content) {
-                $news = new News();
-                $news->UserID = Authorization::getID();
-                $news->Title = $title;
-                $news->Content = $content;
-                $news->save();
+                $newNews = new News();
+                $newNews->UserID = Authorization::getID();
+                $newNews->Title = $title;
+                $newNews->Content = $content;
+                $newNews->save();
             }
         }
         header('Location: ?c=news');
@@ -43,11 +43,11 @@ class NewsController extends AControllerBase
             $newsID = $this->request()->getValue('newsID');
 
             if ($newsID) {
-                $comment = new NewsComment();
-                $comment->NewsID = $newsID;
-                $comment->UserID = Authorization::getID();
-                $comment->Text = $this->request()->getValue('comment');
-                $comment->save();
+                $newComment = new NewsComment();
+                $newComment->NewsID = $newsID;
+                $newComment->UserID = Authorization::getID();
+                $newComment->Text = $this->request()->getValue('comment');
+                $newComment->save();
             }
         }
         header('Location: ?c=news');

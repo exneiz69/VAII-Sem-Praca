@@ -43,7 +43,7 @@
                 </li>
                 <?php if (\App\Authorization::isLogged()) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="?c=home&a=logout">Logout</a>
+                        <a class="nav-link" href="?c=home&a=myAccount">My Account</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item">

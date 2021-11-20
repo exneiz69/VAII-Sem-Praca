@@ -80,6 +80,29 @@ class HomeController extends AControllerBase
         $this->redirectToHome();
     }
 
+    public function myAccount()
+    {
+        $user = User::getOne(Authorization::getID());
+        return $this->html([$user]);
+    }
+
+    public function changePassword()
+    {
+        if (Authorization::isLogged()) {
+            $currentPassword = $this->request()->getValue('currentPassword');
+            $newPassword = $this->request()->getValue('newPassword');
+            $retypedNewPassword = $this->request()->getValue('retypedNewPassword');
+            if ($newPassword == $retypedNewPassword) {
+                $user = User::getOne(Authorization::getID());
+                if ($currentPassword == $user->Password) {
+                    $user->Password = $newPassword;
+                    $user->save();
+                }
+            }
+        }
+        $this->redirectToHome();
+    }
+
     public function redirectToHome()
     {
         header('Location: ?c=home');

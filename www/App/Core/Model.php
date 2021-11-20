@@ -14,7 +14,7 @@ use PDOException;
 abstract class Model implements \JsonSerializable
 {
     private static $connection = null;
-    private static $pkColumn = 'id';
+    private static $pkColumn = 'ID';
 
     abstract static public function setDbColumns();
 

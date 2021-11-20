@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-10">
             <h3 class="text-start">If you already have an account, please <a class="a-custom" href="?c=home&a=login">sign in here.</a>
             </h3>
         </div>
     </div>
 
-    <form method="post" action="?c=home&a=createNewAccount" class="row justify-content-center mt-4">
+    <form method="post" action="?c=home&a=createNewAccount" class="row justify-content-center">
         <div class="col-5 mb-3">
             <label for="inputEmail" class="form-label">Email address</label>
             <input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp">
@@ -35,8 +35,10 @@
         </div>
     </form>
 
-    <div class="col-12">
-        <h1 class="text-center">Footer</h1>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">Footer</h1>
+        </div>
     </div>
 </div>
 </div>
