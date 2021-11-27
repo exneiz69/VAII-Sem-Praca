@@ -22,9 +22,7 @@ class HomeController extends AControllerBase
         if (!Authorization::isLogged()) {
             return $this->html([]);
         }
-        else {
-            $this->redirectToHome();
-        }
+        $this->redirectToHome();
     }
 
     public function logout()
@@ -40,9 +38,7 @@ class HomeController extends AControllerBase
         if (!Authorization::isLogged()) {
             return $this->html([]);
         }
-        else {
-            $this->redirectToHome();
-        }
+        $this->redirectToHome();
     }
 
     public function authentication()
@@ -51,11 +47,19 @@ class HomeController extends AControllerBase
             $username = $this->request()->getValue('username');
             $password = $this->request()->getValue('password');
 
-            $user = User::getUser($username, $password);
+            $usernamePattern = '/^(?=[a-zA-Z0-9._]{6,24}$)(?!.*[_.]{2})[^_.].*[^_.]$/';
+            $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/';
 
-            if ($user) {
-                Authorization::login($user->ID);
+            if (preg_match($usernamePattern, $username) && preg_match($passwordPattern, $password)) {
+                $user = User::getUser($username);
+
+                if (!is_null($user)) {
+                    if (password_verify($password, $user->Password)) {
+                        Authorization::login($user->ID);
+                    }
+                }
             }
+
         }
         $this->redirectToHome();
     }
@@ -68,10 +72,18 @@ class HomeController extends AControllerBase
             $username = $this->request()->getValue('username');
             $fullName = $this->request()->getValue('fullName');
 
-            if ($email && $password && $username && $fullName) {
+            $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
+            $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/';
+            $usernamePattern = '/^(?=[a-zA-Z0-9._]{6,24}$)(?!.*[_.]{2})[^_.].*[^_.]$/';
+            $fullNamePattern = "/^[a-z ,.'-]{1,255}$/i";
+
+            if (preg_match($emailPattern, $email) && preg_match($passwordPattern, $password)
+                && preg_match($usernamePattern, $username) && preg_match($fullNamePattern, $fullName)) {
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
                 $newUser = new User();
                 $newUser->Email = $email;
-                $newUser->Password = $password;
+                $newUser->Password = $hashedPassword;
                 $newUser->Username = $username;
                 $newUser->FullName = $fullName;
                 $newUser->save();
@@ -82,8 +94,12 @@ class HomeController extends AControllerBase
 
     public function myAccount()
     {
-        $user = User::getOne(Authorization::getID());
-        return $this->html([$user]);
+        if (Authorization::isLogged()) {
+            $user = User::getOne(Authorization::getID());
+            return $this->html([$user]);
+        } else {
+            $this->redirectToHome();
+        }
     }
 
     public function changePassword()
@@ -92,11 +108,18 @@ class HomeController extends AControllerBase
             $currentPassword = $this->request()->getValue('currentPassword');
             $newPassword = $this->request()->getValue('newPassword');
             $retypedNewPassword = $this->request()->getValue('retypedNewPassword');
-            if ($newPassword == $retypedNewPassword) {
-                $user = User::getOne(Authorization::getID());
-                if ($currentPassword == $user->Password) {
-                    $user->Password = $newPassword;
-                    $user->save();
+
+            $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/';
+
+            if (preg_match($passwordPattern, $currentPassword) && preg_match($passwordPattern, $newPassword)
+                && preg_match($passwordPattern, $retypedNewPassword)) {
+                if ($newPassword == $retypedNewPassword) {
+                    $user = User::getOne(Authorization::getID());
+                    if (password_verify($currentPassword, $user->Password)) {
+                        $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                        $user->Password = $hashedNewPassword;
+                        $user->save();
+                    }
                 }
             }
         }

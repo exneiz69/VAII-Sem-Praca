@@ -22,9 +22,9 @@ class User extends Model
         return 'Users';
     }
 
-    public static function getUser($username, $password)
+    public static function getUser($username)
     {
-        $user = parent::getAll("Username = (?) AND Password = (?) LIMIT 1", [$username, $password]);
+        $user = parent::getAll("Username = (?) LIMIT 1", [$username]);
 
         return reset($user);
     }

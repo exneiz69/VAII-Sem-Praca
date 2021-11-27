@@ -23,12 +23,16 @@ class VideosController extends AControllerBase
     {
         if (Authorization::isLogged()) {
             $videoID = $this->request()->getValue('videoID');
+            $description = $this->request()->getValue('description');
 
-            if ($videoID) {
+            $videoIDPattern = '/^[a-zA-Z0-9_-]{11,11}$/';
+
+            if (preg_match($videoIDPattern, $videoID)
+                && strlen($description) != 0 && strlen($description) < 256) {
                 $newVideo = new Post();
                 $newVideo->UserID = Authorization::getID();
                 $newVideo->Source = 'https://www.youtube.com/embed/' . $videoID . '?rel=0';
-                $newVideo->Description = $this->request()->getValue('description');
+                $newVideo->Description = $description;
                 $newVideo->save();
             }
         }
@@ -40,9 +44,12 @@ class VideosController extends AControllerBase
         if (Authorization::isLogged()) {
             $videoID = $this->request()->getValue('videoID');
 
-            if ($videoID) {
+            if (ctype_digit($videoID)) {
                 $video = Post::getOne($videoID);
-                $video->like(Authorization::getID());
+
+                if (!is_null($video)) {
+                    $video->like(Authorization::getID());
+                }
             }
         }
         header('Location: ?c=videos');

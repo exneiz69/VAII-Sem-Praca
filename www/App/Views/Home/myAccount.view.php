@@ -3,6 +3,7 @@
 $user = reset($data);
 
 ?>
+<script src="public/myAccountValidation.js"></script>
 <div class="container">
     <div class="row justify-content-center mb-3">
         <div class="col-auto">
@@ -19,24 +20,45 @@ $user = reset($data);
             <span>Full name: <?= $user->FullName ?></span>
         </div>
     </div>
-    <form method="post" action="?c=home&a=changePassword" class="row justify-content-center">
+    <form method="post" action="?c=home&a=changePassword" class="row justify-content-center" id="myAccountForm"
+          novalidate>
         <div class="col">
             <div class="row justify-content-center mb-3">
                 <div class="col-5">
-                    <label for="inputCurrentPassword" class="form-label">Current Password</label>
-                    <input type="password" class="form-control" name="currentPassword" id="inputCurrentPassword">
+                    <label for="currentPasswordInput" class="form-label">Current Password</label>
+                    <input type="password" class="form-control" name="currentPassword" id="currentPasswordInput"
+                           maxlength="72">
+                    <div id="invalid-currentPasswordInput" class="invalid" hidden>
+                        Invalid password format
+                    </div>
+                    <div id="valid-currentPasswordInput" class="valid" hidden>
+                        Looks good!
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mb-3">
                 <div class="col-5">
-                    <label for="inputNewPassword" class="form-label">New Password</label>
-                    <input type="password" class="form-control" name="newPassword" id="inputNewPassword">
+                    <label for="newPasswordInput" class="form-label">New Password</label>
+                    <input type="password" class="form-control" name="newPassword" id="newPasswordInput" maxlength="72">
+                    <div id="invalid-newPasswordInput" class="invalid" hidden>
+                        Invalid password format
+                    </div>
+                    <div id="valid-newPasswordInput" class="valid" hidden>
+                        Looks good!
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mb-3">
                 <div class="col-5">
-                    <label for="inputRetypedNewPassword" class="form-label">Retype New Password</label>
-                    <input type="password" class="form-control" name="retypedNewPassword" id="inputRetypedNewPassword">
+                    <label for="retypedNewPasswordInput" class="form-label">Retype New Password</label>
+                    <input type="password" class="form-control" name="retypedNewPassword" id="retypedNewPasswordInput"
+                           maxlength="72">
+                    <div id="invalid-retypedNewPasswordInput" class="invalid" hidden>
+                        Invalid password format
+                    </div>
+                    <div id="valid-retypedNewPasswordInput" class="valid" hidden>
+                        Looks good!
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mb-3">
@@ -56,5 +78,4 @@ $user = reset($data);
             <h1 class="text-center">Footer</h1>
         </div>
     </div>
-</div>
 </div>

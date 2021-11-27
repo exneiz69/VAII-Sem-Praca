@@ -8,7 +8,7 @@ body {
 }
 
 .navbar-custom .navbar-brand {
-    color: #ff2a6d;
+    color: #fcee09;
 }
 
 .navbar-custom li a {
@@ -90,9 +90,17 @@ body {
 }
 
 hr {
-    border-top:1px dotted #000;
+    border-top:1px dotted #01012b;
 }
 
 textarea {
     resize: none;
+}
+
+.valid {
+    color: #1bd677;
+}
+
+.invalid {
+    color: #ff003c;
 }

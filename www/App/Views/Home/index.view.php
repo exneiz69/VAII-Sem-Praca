@@ -13,7 +13,7 @@
                 Sed id ante vitae lacus dapibus volutpat. Ut id ultricies ipsum. Pellentesque varius semper maximus.
                 Nullam efficitur lacinia ipsum vitae pretium. Etiam elementum imperdiet commodo. Aenean et est accumsan,
                 feugiat sem sit amet, rhoncus dolor. Donec ut risus nisl. Etiam vel erat ut ex ultrices hendrerit sed
-                hendrerit <tellus class=""></tellus>
+                hendrerit
             </p>
         </div>
         <div class="col-12 col-md-3 order-md-first col-lg-2">

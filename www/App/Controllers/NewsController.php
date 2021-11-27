@@ -26,7 +26,7 @@ class NewsController extends AControllerBase
             $title = $this->request()->getValue('title');
             $content = $this->request()->getValue('content');
 
-            if ($title && $content) {
+            if (strlen($title) != 0 && strlen($title) < 256 && strlen($content) != 0) {
                 $newNews = new News();
                 $newNews->UserID = Authorization::getID();
                 $newNews->Title = $title;
@@ -41,13 +41,18 @@ class NewsController extends AControllerBase
     {
         if (Authorization::isLogged()) {
             $newsID = $this->request()->getValue('newsID');
+            $text = $this->request()->getValue('text');
 
-            if ($newsID) {
-                $newComment = new NewsComment();
-                $newComment->NewsID = $newsID;
-                $newComment->UserID = Authorization::getID();
-                $newComment->Text = $this->request()->getValue('comment');
-                $newComment->save();
+            if (ctype_digit($newsID)) {
+                $news = News::getOne($newsID);
+
+                if (!is_null($news) && strlen($text) != 0 && strlen($text) <= 500) {
+                    $newComment = new NewsComment();
+                    $newComment->NewsID = $newsID;
+                    $newComment->UserID = Authorization::getID();
+                    $newComment->Text = $text;
+                    $newComment->save();
+                }
             }
         }
         header('Location: ?c=news');
