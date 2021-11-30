@@ -54,7 +54,7 @@ $user = reset($data);
                     <input type="password" class="form-control" name="retypedNewPassword" id="retypedNewPasswordInput"
                            maxlength="72">
                     <div id="invalid-retypedNewPasswordInput" class="invalid" hidden>
-                        Invalid password format
+                        Passwords must match
                     </div>
                     <div id="valid-retypedNewPasswordInput" class="valid" hidden>
                         Looks good!

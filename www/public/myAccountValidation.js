@@ -53,8 +53,7 @@ window.onload = function () {
 
     let isRetypedPasswordInputValid = false;
     retypedNewPasswordInput.onkeyup = function () {
-        let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/;
-        if (retypedNewPasswordInput.value.match(pattern)) {
+        if (retypedNewPasswordInput.value === newPasswordInput.value) {
             isRetypedPasswordInputValid = true;
             invalidRetypedNewPasswordInput.hidden = true;
             validRetypedNewPasswordInput.hidden = false;

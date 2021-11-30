@@ -17,8 +17,14 @@
                       class="row border mb-4" id="uploadScreenshotForm" novalidate>
                     <div class="col-auto">
                         <label for="screenshotInput" class="form-label">Select your screenshot file</label>
-                        <input class="form-control mb-3" type="file" name="screenshot" id="screenshotInput">
-                        <label for="descriptionInput" class="form-label">Description</label>
+                        <input class="form-control" type="file" name="screenshot" id="screenshotInput" accept=".jpg,.jpeg,.png">
+                        <div id="invalid-screenshotInput" class="invalid" hidden>
+                            Invalid screenshot format
+                        </div>
+                        <div id="valid-screenshotInput" class="valid" hidden>
+                            Looks good!
+                        </div>
+                        <label for="descriptionInput mt-3" class="form-label">Description</label>
                         <textarea class="form-control" name="description" id="descriptionInput" rows="3"
                                   maxlength="255"></textarea>
                         <div id="invalid-descriptionInput" class="invalid" hidden>
