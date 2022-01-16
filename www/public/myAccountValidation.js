@@ -1,4 +1,6 @@
-window.onload = function () {
+import {validateOnFocusInitially, validate, preventSubmit} from './validation.js';
+
+function validateMyAccountForm() {
     let currentPasswordInput = document.getElementById("currentPasswordInput");
     let invalidCurrentPasswordInput = document.getElementById("invalid-currentPasswordInput");
     let validCurrentPasswordInput = document.getElementById("valid-currentPasswordInput");
@@ -11,64 +13,38 @@ window.onload = function () {
     let invalidRetypedNewPasswordInput = document.getElementById("invalid-retypedNewPasswordInput");
     let validRetypedNewPasswordInput = document.getElementById("valid-retypedNewPasswordInput");
 
-    currentPasswordInput.addEventListener("focus", function () {
-        invalidCurrentPasswordInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(currentPasswordInput, invalidCurrentPasswordInput, validCurrentPasswordInput);
 
-    newPasswordInput.addEventListener("focus", function () {
-        invalidNewPasswordInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(newPasswordInput, invalidNewPasswordInput, validNewPasswordInput);
 
-    retypedNewPasswordInput.addEventListener("focus", function () {
-        invalidRetypedNewPasswordInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(retypedNewPasswordInput, invalidRetypedNewPasswordInput, validRetypedNewPasswordInput);
 
     let isCurrentPasswordInputValid = false;
-    currentPasswordInput.onkeyup = function () {
+    currentPasswordInput.addEventListener("input", function () {
         let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/;
-        if (currentPasswordInput.value.match(pattern)) {
-            isCurrentPasswordInputValid = true;
-            invalidCurrentPasswordInput.hidden = true;
-            validCurrentPasswordInput.hidden = false;
-        } else {
-            isCurrentPasswordInputValid = false;
-            invalidCurrentPasswordInput.hidden = false;
-            validCurrentPasswordInput.hidden = true;
-        }
-    }
+        isCurrentPasswordInputValid = validate(currentPasswordInput, invalidCurrentPasswordInput, validCurrentPasswordInput,
+            () => currentPasswordInput.value.match(pattern));
+    });
 
     let isNewPasswordInputValid = false;
-    newPasswordInput.onkeyup = function () {
+    newPasswordInput.addEventListener("input", function () {
         let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/;
-        if (newPasswordInput.value.match(pattern)) {
-            isNewPasswordInputValid = true;
-            invalidNewPasswordInput.hidden = true;
-            validNewPasswordInput.hidden = false;
-        } else {
-            isNewPasswordInputValid = false;
-            invalidNewPasswordInput.hidden = false;
-            validNewPasswordInput.hidden = true;
-        }
-    }
+        isNewPasswordInputValid = validate(newPasswordInput, invalidNewPasswordInput, validNewPasswordInput,
+            () => newPasswordInput.value.match(pattern));
+    });
 
-    let isRetypedPasswordInputValid = false;
-    retypedNewPasswordInput.onkeyup = function () {
-        if (retypedNewPasswordInput.value === newPasswordInput.value) {
-            isRetypedPasswordInputValid = true;
-            invalidRetypedNewPasswordInput.hidden = true;
-            validRetypedNewPasswordInput.hidden = false;
-        } else {
-            isRetypedPasswordInputValid = false;
-            invalidRetypedNewPasswordInput.hidden = false;
-            validRetypedNewPasswordInput.hidden = true;
-        }
-    }
+    let isRetypedNewPasswordInputValid = false;
+    retypedNewPasswordInput.addEventListener("input", function () {
+         isRetypedNewPasswordInputValid = validate(retypedNewPasswordInput, invalidRetypedNewPasswordInput, validRetypedNewPasswordInput,
+            () => retypedNewPasswordInput.value === newPasswordInput.value);
+    });
 
     let myAccountForm = document.getElementById("myAccountForm");
-    myAccountForm.addEventListener('submit', function (event) {
-        if (!isCurrentPasswordInputValid || !isNewPasswordInputValid || !isRetypedPasswordInputValid) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    });
+
+    preventSubmit(myAccountForm,
+        () => !isCurrentPasswordInputValid || !isNewPasswordInputValid || !isRetypedNewPasswordInputValid);
 }
+
+window.addEventListener("load", function () {
+    validateMyAccountForm();
+});

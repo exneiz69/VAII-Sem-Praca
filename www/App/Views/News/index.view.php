@@ -3,7 +3,8 @@
 /** @var App\Models\News[] $data */
 
 ?>
-<script src="public/newsValidation.js"></script>
+<script type="module" src="public/newsValidation.js"></script>
+<script type="module" src="public/newsComments.js"></script>
 <div class="container-fluid">
     <div class="row pb-5">
         <div class="col-12">
@@ -13,7 +14,7 @@
     <div class="row pt-4">
         <div class="col-12 col-md-9 col-lg-8">
             <?php if (\App\Authorization::isLogged()) { ?>
-                <form method="post" action="?c=news&a=uploadNews" class="row border mb-4" id="uploadNewsForm"
+                <form method="post" action="?c=news&a=uploadNews" class="row form-custom rounded mb-4" id="uploadNewsForm"
                       novalidate>
                     <div class="col-auto">
                         <label for="titleInput" class="form-label">Title</label>
@@ -38,7 +39,7 @@
             <?php } ?>
 
             <?php foreach ($data as $news) { ?>
-                <div class="row justify-content-center mb-4">
+                <div class="row justify-content-center mb-4 border rounded">
                     <div class="col-11">
                         <h2 class="text-center mb-4"><?= $news->Title ?></h2>
                         <div class="text-justify">
@@ -48,32 +49,24 @@
                     </div>
 
                     <div class="col-11">
-                        <div class="row justify-content-center mb-4">
-                            <?php foreach ($news->getComments() as $comment) { ?>
-                                <div class="col-10">
-                                    <?= $comment->Text ?>
-                                    <hr class="my-2">
-                                </div>
-                            <?php } ?>
+                        <div class="comments-box row justify-content-center mb-4" id="commentsBox<?= $news->ID ?>">
                         </div>
                         <?php if (\App\Authorization::isLogged()) { ?>
-                            <form method="post" action="?c=news&a=addComment" class="row justify-content-end mb-4"
-                                  id="addCommentForm" novalidate>
+                            <div class="comments-add-box row justify-content-end mb-4" id="addCommentForm<?= $news->ID ?>">
                                 <div class="col-auto mb-3">
-                                    <textarea class="form-control" name="text" id="textInput" rows="3" cols="60"
+                                    <textarea class="form-control" name="text" id="textInput<?= $news->ID ?>" rows="3" cols="60"
                                               maxlength="500"></textarea>
-                                    <input type="hidden" name="newsID" value="<?= $news->ID ?>">
-                                    <div id="invalid-textInput" class="invalid" hidden>
+                                    <div id="invalid-textInput<?= $news->ID ?>" class="invalid" hidden>
                                         Invalid text format
                                     </div>
-                                    <div id="valid-textInput" class="valid" hidden>
+                                    <div id="valid-textInput<?= $news->ID ?>" class="valid" hidden>
                                         Looks good!
                                     </div>
                                 </div>
                                 <div class="col-auto mb-2">
-                                    <button type="submit" class="btn">Add comment</button>
+                                    <button class="btn">Add comment</button>
                                 </div>
-                            </form>
+                            </div>
                         <?php } ?>
                     </div>
                 </div>

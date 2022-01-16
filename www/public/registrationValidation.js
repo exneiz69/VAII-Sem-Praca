@@ -1,4 +1,6 @@
-window.onload = function () {
+import {validateOnFocusInitially, validate, preventSubmit} from './validation.js';
+
+function validateRegistrationForm () {
     let emailInput = document.getElementById("emailInput");
     let invalidEmailInput = document.getElementById("invalid-emailInput");
     let validEmailInput = document.getElementById("valid-emailInput");
@@ -15,84 +17,49 @@ window.onload = function () {
     let invalidFullNameInput = document.getElementById("invalid-fullNameInput");
     let validFullNameInput = document.getElementById("valid-fullNameInput");
 
-    emailInput.addEventListener("focus", function () {
-        invalidEmailInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(emailInput, invalidEmailInput, validEmailInput);
 
-    passwordInput.addEventListener("focus", function () {
-        invalidPasswordInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(passwordInput, invalidPasswordInput, validPasswordInput);
 
-    usernameInput.addEventListener("focus", function () {
-        invalidUsernameInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(usernameInput, invalidUsernameInput, validUsernameInput);
 
-    fullNameInput.addEventListener("focus", function () {
-        invalidFullNameInput.hidden = false;
-    }, {once: true});
+    validateOnFocusInitially(fullNameInput, invalidFullNameInput, validFullNameInput);
 
     let isEmailInputValid = false;
-    emailInput.onkeyup = function () {
+    emailInput.addEventListener("input", function () {
         let pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (emailInput.value.match(pattern) && emailInput.value.length < 256) {
-            isEmailInputValid = true;
-            invalidEmailInput.hidden = true;
-            validEmailInput.hidden = false;
-        } else {
-            isEmailInputValid = false;
-            invalidEmailInput.hidden = false;
-            validEmailInput.hidden = true;
-        }
-    }
+        isEmailInputValid = validate(emailInput, invalidEmailInput, validEmailInput,
+            () => emailInput.value.match(pattern));
+    });
 
     let isPasswordInputValid = false;
-    passwordInput.onkeyup = function () {
+    passwordInput.addEventListener("input", function () {
         let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/;
-        if (passwordInput.value.match(pattern)) {
-            isPasswordInputValid = true;
-            invalidPasswordInput.hidden = true;
-            validPasswordInput.hidden = false;
-        } else {
-            isPasswordInputValid = false;
-            invalidPasswordInput.hidden = false;
-            validPasswordInput.hidden = true;
-        }
-    }
+        isPasswordInputValid = validate(passwordInput, invalidPasswordInput, validPasswordInput,
+            () => passwordInput.value.match(pattern));
+    });
 
     let isUsernameInputValid = false;
-    usernameInput.onkeyup = function () {
+    usernameInput.addEventListener("input", function () {
         let pattern = /^(?=[a-zA-Z0-9._]{6,24}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-        if (usernameInput.value.match(pattern)) {
-            isUsernameInputValid = true;
-            invalidUsernameInput.hidden = true;
-            validUsernameInput.hidden = false;
-        } else {
-            isUsernameInputValid = false;
-            invalidUsernameInput.hidden = false;
-            validUsernameInput.hidden = true;
-        }
-    }
+        isUsernameInputValid = validate(usernameInput, invalidUsernameInput, validUsernameInput,
+            () => usernameInput.value.match(pattern));
+    });
 
     let isFullNameInputValid = false;
-    fullNameInput.onkeyup = function () {
+    fullNameInput.addEventListener("input", function () {
         let pattern = /^[a-z ,.'-]{1,255}$/i;
-        if (fullNameInput.value.match(pattern)) {
-            isFullNameInputValid = true;
-            invalidFullNameInput.hidden = true;
-            validFullNameInput.hidden = false;
-        } else {
-            isFullNameInputValid = false;
-            invalidFullNameInput.hidden = false;
-            validFullNameInput.hidden = true;
-        }
-    }
+        isFullNameInputValid = validate(fullNameInput, invalidFullNameInput, validFullNameInput,
+            () => fullNameInput.value.match(pattern));
+    });
 
     let registrationForm = document.getElementById("registrationForm");
-    registrationForm.addEventListener('submit', function (event) {
-        if (!isEmailInputValid || !isPasswordInputValid
-            || !isUsernameInputValid || !isFullNameInputValid) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    });
+
+    preventSubmit(registrationForm,
+        () => !isEmailInputValid || !isPasswordInputValid
+            || !isUsernameInputValid || !isFullNameInputValid);
 }
+
+window.addEventListener("load", function () {
+    validateRegistrationForm();
+});

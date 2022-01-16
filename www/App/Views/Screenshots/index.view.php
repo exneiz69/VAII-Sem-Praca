@@ -3,7 +3,7 @@
 /** @var App\Models\Post[] $data */
 
 ?>
-<script src="public/screenshotsValidation.js"></script>
+<script type="module" src="public/screenshotsValidation.js"></script>
 <div class="container-fluid">
     <div class="row pb-5">
         <div class="col-12">
@@ -14,10 +14,11 @@
         <div class="col-12 col-md-9 col-lg-8">
             <?php if (\App\Authorization::isLogged()) { ?>
                 <form method="post" enctype="multipart/form-data" action="?c=screenshots&a=uploadScreenshot"
-                      class="row border mb-4" id="uploadScreenshotForm" novalidate>
+                      class="row form-custom rounded mb-4" id="uploadScreenshotForm" novalidate>
                     <div class="col-auto">
                         <label for="screenshotInput" class="form-label">Select your screenshot file</label>
-                        <input class="form-control" type="file" name="screenshot" id="screenshotInput" accept=".jpg,.jpeg,.png">
+                        <input class="form-control" type="file" name="screenshot" id="screenshotInput"
+                               accept=".jpg,.jpeg,.png">
                         <div id="invalid-screenshotInput" class="invalid" hidden>
                             Invalid screenshot format
                         </div>
@@ -45,6 +46,11 @@
                         <br>
                         <a href="?c=screenshots&a=likeScreenshot&screenshotID=<?= $screenshot->ID ?>" type="button"
                            class="btn me-3"><i class="bi bi-heart pe-2"></i><?= $screenshot->getLikesAmount() ?></a>
+                        <?php if ($screenshot->UserID == \App\Authorization::getID()) { ?>
+                            <a href="?c=screenshots&a=deleteScreenshot&screenshotID=<?= $screenshot->ID ?>"
+                               type="button"
+                               class="btn me-3"><i class="bi bi-x-lg"></i></a>
+                        <?php } ?>
                         <span><?= $screenshot->Description ?></span>
                     </div>
                 </div>

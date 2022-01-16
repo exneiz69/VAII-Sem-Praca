@@ -1,4 +1,4 @@
-<script src="public/loginValidation.js"></script>
+<script type="module" src="public/loginValidation.js"></script>
 <div class="container">
     <div class="row">
         <form method="post" action="?c=home&a=authentication" class="col" id="loginForm" novalidate>

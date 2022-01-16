@@ -12,6 +12,9 @@ use App\Models\Post;
  */
 class VideosController extends AControllerBase
 {
+    /**
+     * @throws \Exception
+     */
     public function index()
     {
         $video = Post::getAllVideos();
@@ -19,6 +22,9 @@ class VideosController extends AControllerBase
         return $this->html($video);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function uploadVideo()
     {
         if (Authorization::isLogged()) {
@@ -39,6 +45,9 @@ class VideosController extends AControllerBase
         header('Location: ?c=videos');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function likeVideo()
     {
         if (Authorization::isLogged()) {
@@ -49,6 +58,25 @@ class VideosController extends AControllerBase
 
                 if (!is_null($video)) {
                     $video->like(Authorization::getID());
+                }
+            }
+        }
+        header('Location: ?c=videos');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function deleteVideo()
+    {
+        if (Authorization::isLogged()) {
+            $videoID = $this->request()->getValue('videoID');
+
+            if (ctype_digit($videoID)) {
+                $video = Post::getOne($videoID);
+
+                if (!is_null($video) && $video->UserID == Authorization::getID()) {
+                    $video->delete();
                 }
             }
         }

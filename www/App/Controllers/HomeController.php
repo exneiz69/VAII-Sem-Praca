@@ -64,6 +64,9 @@ class HomeController extends AControllerBase
         $this->redirectToHome();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function createNewAccount()
     {
         if (!Authorization::isLogged()) {
@@ -92,6 +95,9 @@ class HomeController extends AControllerBase
         $this->redirectToHome();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function myAccount()
     {
         if (Authorization::isLogged()) {
@@ -102,6 +108,9 @@ class HomeController extends AControllerBase
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function changePassword()
     {
         if (Authorization::isLogged()) {
@@ -122,6 +131,19 @@ class HomeController extends AControllerBase
                     }
                 }
             }
+        }
+        $this->redirectToHome();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function deleteAccount()
+    {
+        if (Authorization::isLogged()) {
+            $user = User::getOne(Authorization::getID());
+            Authorization::logout();
+            $user->delete();
         }
         $this->redirectToHome();
     }

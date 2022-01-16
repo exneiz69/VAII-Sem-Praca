@@ -13,6 +13,9 @@ use App\Models\Post;
  */
 class ScreenshotsController extends AControllerBase
 {
+    /**
+     * @throws \Exception
+     */
     public function index()
     {
         $screenshot = Post::getAllScreenshots();
@@ -20,6 +23,9 @@ class ScreenshotsController extends AControllerBase
         return $this->html($screenshot);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function uploadScreenshot()
     {
         if (Authorization::isLogged()) {
@@ -42,6 +48,9 @@ class ScreenshotsController extends AControllerBase
         header('Location: ?c=screenshots');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function likeScreenshot()
     {
         if (Authorization::isLogged()) {
@@ -52,6 +61,25 @@ class ScreenshotsController extends AControllerBase
 
                 if (!is_null($screenshot)) {
                     $screenshot->like(Authorization::getID());
+                }
+            }
+        }
+        header('Location: ?c=screenshots');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function deleteScreenshot()
+    {
+        if (Authorization::isLogged()) {
+            $screenshotID = $this->request()->getValue('screenshotID');
+
+            if (ctype_digit($screenshotID)) {
+                $screenshot = Post::getOne($screenshotID);
+
+                if (!is_null($screenshot) && $screenshot->UserID == Authorization::getID()) {
+                    $screenshot->delete();
                 }
             }
         }

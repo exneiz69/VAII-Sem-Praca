@@ -55,6 +55,15 @@ body {
     background-color: #005678;
 }
 
+input[type=file]::file-selector-button {
+    background-color: #d1f7ff;
+}
+
+.input-group-text {
+    color: #01012b;
+    border-color: #01012b;
+    background-color: #d1f7ff;
+}
 .img-thumbnail.ads {
     background-color: #01012b;
     border-color: #01012b;
@@ -66,7 +75,6 @@ body {
     border-color: #01012b;
     padding: .1rem;
 }
-
 
 .a-custom:link,
 .a-custom:visited {
@@ -103,4 +111,13 @@ textarea {
 
 .invalid {
     color: #ff003c;
+}
+
+.form-custom {
+    color: #d1f7ff;
+    background-color: #01012b;
+}
+
+.border {
+    border: 2px solid #01012b!important
 }

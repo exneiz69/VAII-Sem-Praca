@@ -1,4 +1,6 @@
-window.onload = function () {
+import {validateOnFocusInitially, validate, preventSubmit} from './validation.js';
+
+function validateNewsForm() {
     let titleInput = document.getElementById("titleInput");
     let invalidTitleInput = document.getElementById("invalid-titleInput");
     let validTitleInput = document.getElementById("valid-titleInput");
@@ -7,77 +9,50 @@ window.onload = function () {
     let invalidContentInput = document.getElementById("invalid-contentInput");
     let validContentInput = document.getElementById("valid-contentInput");
 
-    let textInput = document.getElementById("textInput");
-    let invalidTextInput = document.getElementById("invalid-textInput");
-    let validTextInput = document.getElementById("valid-textInput");
+    let commentsAddBoxes = document.getElementsByClassName("comments-add-box");
 
-    titleInput.addEventListener("focus", function() {
-        invalidTitleInput.hidden = false;
-    }, {once : true});
+    validateOnFocusInitially(titleInput, invalidTitleInput, validTitleInput);
 
-    contentInput.addEventListener("focus", function() {
-        invalidContentInput.hidden = false;
-    }, {once : true});
-
-    textInput.addEventListener("focus", function() {
-        invalidTextInput.hidden = false;
-    }, {once : true});
+    validateOnFocusInitially(contentInput, invalidContentInput, validContentInput);
 
     let isTitleInputValid = false;
-    titleInput.onkeyup = function () {
-        if (titleInput.value.length != 0 && titleInput.value.length < 256) {
-            isTitleInputValid = true;
-            invalidTitleInput.hidden = true;
-            validTitleInput.hidden = false;
-        }
-        else {
-            isTitleInputValid = false;
-            invalidTitleInput.hidden = false;
-            validTitleInput.hidden = true;
-        }
-    }
+    titleInput.addEventListener("input", function () {
+        isTitleInputValid = validate(titleInput, invalidTitleInput, validTitleInput,
+            () => titleInput.value.length !== 0 && titleInput.value.length < 256);
+    });
 
     let isContentInputValid = false;
-    contentInput.onkeyup = function () {
-        if (contentInput.value.length != 0) {
-            isContentInputValid = true;
-            invalidContentInput.hidden = true;
-            validContentInput.hidden = false;
-        }
-        else {
-            isContentInputValid = false;
-            invalidContentInput.hidden = false;
-            validContentInput.hidden = true;
-        }
-    }
+    contentInput.addEventListener("input", function () {
+        isContentInputValid = validate(contentInput, invalidContentInput, validContentInput,
+            () => contentInput.value.length !== 0);
+    });
 
-    let isTextInputValid = false;
-    textInput.onkeyup = function () {
-        if (textInput.value.length != 0 && textInput.value.length <= 500) {
-            isTextInputValid = true;
-            invalidTextInput.hidden = true;
-            validTextInput.hidden = false;
-        }
-        else {
-            isTextInputValid = false;
-            invalidTextInput.hidden = false;
-            validTextInput.hidden = true;
-        }
+    for (let commentsAddBox of commentsAddBoxes) {
+        let textInput = commentsAddBox.getElementsByTagName("textarea").item(0);
+        let invalidTextInput = commentsAddBox.getElementsByClassName("invalid").item(0);
+        let validTextInput = commentsAddBox.getElementsByClassName("valid").item(0);
+        validateOnFocusInitially(textInput, invalidTextInput, validTextInput);
+        textInput.addEventListener("input", function () {
+            validate(textInput, invalidTextInput, validTextInput,
+                () => textInput.value.length !== 0 && textInput.value.length <= 500);
+        });
     }
 
     let uploadNewsForm = document.getElementById("uploadNewsForm");
-    uploadNewsForm.addEventListener('submit', function (event) {
-        if (!isTitleInputValid || !isContentInputValid) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    });
 
-    let addCommentForm = document.getElementById("addCommentForm");
-    addCommentForm.addEventListener('submit', function (event) {
-        if (!isTextInputValid) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    });
+    preventSubmit(uploadNewsForm,
+        () => !isTitleInputValid || !isContentInputValid);
+}
+
+window.addEventListener("load", function () {
+    validateNewsForm();
+});
+
+export function revalidateCommentsAddBox(commentsAddBox) {
+    let textInput = commentsAddBox.getElementsByTagName("textarea").item(0);
+    let invalidTextInput = commentsAddBox.getElementsByClassName("invalid").item(0);
+    let validTextInput = commentsAddBox.getElementsByClassName("valid").item(0);
+    invalidTextInput.hidden = true;
+    validTextInput.hidden = true;
+    validateOnFocusInitially(textInput, invalidTextInput, validTextInput);
 }

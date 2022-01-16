@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Game Community</title>
+    <title>Cyber Community</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- CSS only -->
@@ -20,7 +20,7 @@
 <body>
 <nav class="navbar navbar-custom navbar-expand-lg mb-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="?c=home"><i class="bi bi-controller me-1"></i>Game Community</a>
+        <a class="navbar-brand" href="?c=home"><i class="bi bi-hdd-stack me-1"></i>Cyber Community</a>
         <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

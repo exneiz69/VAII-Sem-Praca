@@ -1,4 +1,6 @@
-window.onload = function () {
+import {validateOnFocusInitially, validate, preventSubmit} from './validation.js';
+
+function validateLoginForm() {
     let usernameInput = document.getElementById("usernameInput");
     let invalidUsernameInput = document.getElementById("invalid-usernameInput");
     let validUsernameInput = document.getElementById("valid-usernameInput");
@@ -7,49 +9,30 @@ window.onload = function () {
     let invalidPasswordInput = document.getElementById("invalid-passwordInput");
     let validPasswordInput = document.getElementById("valid-passwordInput");
 
-    usernameInput.addEventListener("focus", function() {
-        invalidUsernameInput.hidden = false;
-    }, {once : true});
+    validateOnFocusInitially(usernameInput, invalidUsernameInput, validUsernameInput);
 
-    passwordInput.addEventListener("focus", function() {
-        invalidPasswordInput.hidden = false;
-    }, {once : true});
+    validateOnFocusInitially(passwordInput, invalidPasswordInput, validPasswordInput);
 
     let isUsernameInputValid = false;
-    usernameInput.onkeyup = function () {
+    usernameInput.addEventListener("input", function () {
         let pattern = /^(?=[a-zA-Z0-9._]{6,24}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-        if (usernameInput.value.match(pattern)) {
-            isUsernameInputValid = true;
-            invalidUsernameInput.hidden = true;
-            validUsernameInput.hidden = false;
-        }
-        else {
-            isUsernameInputValid = false;
-            invalidUsernameInput.hidden = false;
-            validUsernameInput.hidden = true;
-        }
-    }
+        isUsernameInputValid = validate(usernameInput, invalidUsernameInput, validUsernameInput,
+            () => usernameInput.value.match(pattern));
+    });
 
     let isPasswordInputValid = false;
-    passwordInput.onkeyup = function () {
+    passwordInput.addEventListener("input", function () {
         let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,72}$/;
-        if (passwordInput.value.match(pattern)) {
-            isPasswordInputValid = true;
-            invalidPasswordInput.hidden = true;
-            validPasswordInput.hidden = false;
-        }
-        else {
-            isPasswordInputValid = false;
-            invalidPasswordInput.hidden = false;
-            validPasswordInput.hidden = true;
-        }
-    }
+        isPasswordInputValid = validate(passwordInput, invalidPasswordInput, validPasswordInput,
+            () => passwordInput.value.match(pattern));
+    });
 
     let loginForm = document.getElementById("loginForm");
-    loginForm.addEventListener('submit', function (event) {
-        if (!isUsernameInputValid || !isPasswordInputValid) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    });
+
+    preventSubmit(loginForm,
+        () => !isUsernameInputValid || !isPasswordInputValid);
 }
+
+window.addEventListener("load", function () {
+    validateLoginForm();
+});

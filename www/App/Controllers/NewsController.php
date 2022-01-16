@@ -13,6 +13,9 @@ use App\Models\NewsComment;
  */
 class NewsController extends AControllerBase
 {
+    /**
+     * @throws \Exception
+     */
     public function index()
     {
         $news = News::getAll();
@@ -20,6 +23,9 @@ class NewsController extends AControllerBase
         return $this->html($news);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function uploadNews()
     {
         if (Authorization::isLogged()) {
@@ -37,8 +43,28 @@ class NewsController extends AControllerBase
         header('Location: ?c=news');
     }
 
+    /**
+     * @throws \Exception
+     */
+    public function getComments()
+    {
+        $newsID = $this->request()->getValue('newsID');
+        $comments = array();
+        if (ctype_digit($newsID)) {
+            $news = News::getOne($newsID);
+            if (!is_null($news)) {
+                $comments = $news->getComments();
+            }
+        }
+        return $this->json($comments);
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function addComment()
     {
+        $reply = array("Reply" => "ERROR");
         if (Authorization::isLogged()) {
             $newsID = $this->request()->getValue('newsID');
             $text = $this->request()->getValue('text');
@@ -52,9 +78,10 @@ class NewsController extends AControllerBase
                     $newComment->UserID = Authorization::getID();
                     $newComment->Text = $text;
                     $newComment->save();
+                    $reply = array("Reply" => "OK");
                 }
             }
         }
-        header('Location: ?c=news');
+        return $this->json($reply);
     }
 }

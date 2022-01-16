@@ -23,16 +23,25 @@ class Post extends Model
         return 'Posts';
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function getAllScreenshots()
     {
         return parent::getAll("Source LIKE '" . Configuration::UPLOAD_SCREENSHOTS_DIR . "/%'");
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function getAllVideos()
     {
         return parent::getAll("Source LIKE 'https://www.youtube.com/embed/%'");
     }
 
+    /**
+     * @throws \Exception
+     */
     public function like($userID)
     {
         if ($this->hasLike($userID)) {
@@ -47,6 +56,9 @@ class Post extends Model
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function hasLike($userID) : bool
     {
         $stmt = Connection::connect()
@@ -60,11 +72,27 @@ class Post extends Model
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getLikesAmount() : int
     {
         $stmt = Connection::connect()
             ->prepare("SELECT * FROM PostsLikes WHERE PostID = (?)");
         $stmt->execute([intval($this->ID)]);
         return $stmt->rowCount();
+    }
+
+    public function delete() : bool
+    {
+        $stmt = Connection::connect()
+            ->prepare("DELETE FROM Posts WHERE ID = (?)");
+        $stmt->execute([intval($this->ID)]);
+        if ($stmt->rowCount() != 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

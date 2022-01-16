@@ -3,7 +3,7 @@
 $user = reset($data);
 
 ?>
-<script src="public/myAccountValidation.js"></script>
+<script type="module" src="public/myAccountValidation.js"></script>
 <div class="container">
     <div class="row justify-content-center mb-3">
         <div class="col-auto">
@@ -70,7 +70,12 @@ $user = reset($data);
     </form>
     <div class="row justify-content-center mb-3">
         <div class="col-auto">
-            <a href="?c=home&a=logout" type="submit" class="btn">Logout</a>
+            <a href="?c=home&a=logout"class="btn">Logout</a>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto">
+            <a href="?c=home&a=deleteAccount" class="btn">Delete account</a>
         </div>
     </div>
     <div class="row">

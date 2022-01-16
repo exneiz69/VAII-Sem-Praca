@@ -103,7 +103,7 @@ abstract class Model implements \JsonSerializable
                 }
                 return $tmpModel;
             } else {
-                throw new \Exception('Record not found!');
+                return null;
             }
         } catch (PDOException $e) {
             throw new \Exception('Query failed: ' . $e->getMessage());

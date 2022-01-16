@@ -1,4 +1,4 @@
-<script src="public/registrationValidation.js"></script>
+<script type="module" src="public/registrationValidation.js"></script>
 <div class="container">
     <div class="row justify-content-center mb-3">
         <div class="col-10">

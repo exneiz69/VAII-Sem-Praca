@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\DB\Connection;
 use App\Core\Model;
 
 class User extends Model
@@ -22,11 +23,26 @@ class User extends Model
         return 'Users';
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function getUser($username)
     {
         $user = parent::getAll("Username = (?) LIMIT 1", [$username]);
 
-        return reset($user);
+        return $user ? reset($user) : null;
     }
 
+    public function delete() : bool
+    {
+        $stmt = Connection::connect()
+            ->prepare("DELETE FROM Users WHERE ID = (?)");
+        $stmt->execute([intval($this->ID)]);
+        if ($stmt->rowCount() != 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
