@@ -24,17 +24,19 @@ function processCommentsSending() {
 
     for (let commentsAddBox of commentsAddBoxes) {
         let button = commentsAddBox.getElementsByTagName("button").item(0);
-        let newsID = commentsAddBox.id.replace("addCommentForm", "")
         let textInput = commentsAddBox.getElementsByTagName("textarea").item(0);
+        let newsID = commentsAddBox.id.replace("addCommentForm", "")
         button.addEventListener("click", function () {
-            addComment(newsID, textInput.value);
-            textInput.value = "";
-            revalidateCommentsAddBox(commentsAddBox);
+            if (textInput.value.length !== 0 && textInput.value.length <= 500) {
+                sendComment(newsID, textInput.value);
+                textInput.value = "";
+                revalidateCommentsAddBox(commentsAddBox);
+            }
         })
     }
 }
 
-function addComment(newsID, text) {
+function sendComment(newsID, text) {
     fetch("?c=news&a=addComment", {
         method: 'POST',
         headers: {

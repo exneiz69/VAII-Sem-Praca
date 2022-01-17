@@ -13,7 +13,8 @@
     <div class="row pt-4">
         <div class="col-12 col-md-9 col-lg-8">
             <?php if (\App\Authorization::isLogged()) { ?>
-                <form method="post" action="?c=videos&a=uploadVideo" class="row form-custom rounded mb-4" id="uploadVideoForm"
+                <form method="post" action="?c=videos&a=uploadVideo" class="row form-custom rounded mb-4"
+                      id="uploadVideoForm"
                       novalidate>
                     <div class="col-auto">
                         <label for="videoIDInput" class="form-label">YouTube video ID</label>
@@ -49,10 +50,10 @@
                             <iframe src="<?= $video->Source ?>" title="YouTube video"
                                     allowfullscreen></iframe>
                         </div>
-                        <a href="?c=videos&a=likeVideo&videoID=<?= $video->ID ?>" type="button" class="btn me-3">
+                        <a href="?c=videos&a=likeVideo&videoID=<?= $video->ID ?>" class="btn me-3">
                             <i class="bi bi-heart pe-2"></i><?= $video->getLikesAmount() ?></a>
                         <?php if ($video->UserID == \App\Authorization::getID()) { ?>
-                            <a href="?c=videos&a=deleteVideo&videoID=<?= $video->ID ?>" type="button"
+                            <a href="?c=videos&a=deleteVideo&videoID=<?= $video->ID ?>"
                                class="btn me-3"><i class="bi bi-x-lg"></i></a>
                         <?php } ?>
                         <span><?= $video->Description ?></span>

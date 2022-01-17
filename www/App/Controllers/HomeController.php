@@ -41,6 +41,9 @@ class HomeController extends AControllerBase
         $this->redirectToHome();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function authentication()
     {
         if (!Authorization::isLogged()) {

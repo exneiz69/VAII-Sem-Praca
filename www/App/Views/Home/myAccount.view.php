@@ -70,7 +70,7 @@ $user = reset($data);
     </form>
     <div class="row justify-content-center mb-3">
         <div class="col-auto">
-            <a href="?c=home&a=logout"class="btn">Logout</a>
+            <a href="?c=home&a=logout" class="btn">Logout</a>
         </div>
     </div>
     <div class="row justify-content-center mb-3">

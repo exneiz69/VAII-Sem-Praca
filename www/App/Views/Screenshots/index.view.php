@@ -44,11 +44,10 @@
                     <div class="col-11">
                         <img src="<?= $screenshot->Source ?>" class="img-thumbnail screenshot mb-1" alt="...">
                         <br>
-                        <a href="?c=screenshots&a=likeScreenshot&screenshotID=<?= $screenshot->ID ?>" type="button"
+                        <a href="?c=screenshots&a=likeScreenshot&screenshotID=<?= $screenshot->ID ?>"
                            class="btn me-3"><i class="bi bi-heart pe-2"></i><?= $screenshot->getLikesAmount() ?></a>
                         <?php if ($screenshot->UserID == \App\Authorization::getID()) { ?>
                             <a href="?c=screenshots&a=deleteScreenshot&screenshotID=<?= $screenshot->ID ?>"
-                               type="button"
                                class="btn me-3"><i class="bi bi-x-lg"></i></a>
                         <?php } ?>
                         <span><?= $screenshot->Description ?></span>
